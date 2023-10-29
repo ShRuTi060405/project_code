@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF=8">
+        <title>Profile</title>
+        <link rel="stylesheet" href="./style.css"/>
+    </head>
+    <body>
+        <div class="links">
+            <a class="home" href="?">Home</a>
+            <a class="faqs" href="?">Faqs</a>
+            <a class="contacts" href="?">Contacts</a>
+        </div>
+        <div class="box">
+            <div class="profile">
+                <p class="name">Full Name</p>
+                <input type="text" id="fullname" class="full-name"/>
+                <p class="phone">Phone No.</p>
+                <input type="text" id="phoneno" class="ph"/>
+                <p class="dob">Date of Birth</p>
+                <input type="date" id="date" class="date">
+                <p>Year</p>
+                <select id="year" class="year">
+                    <option>select</option>
+                    <option>1y</option>
+                    <option>2y</option>
+                    <option>3y</option>
+                    <option>4y</option>
+                    <option>5y</option>
+                </select>
+                <p>Branch</p>
+                <select id="branch" class="branch">
+                    <option>Select</option>
+                    <option>Computer Science</option>
+                    <option>Data Science</option>
+                    <option>Engineering Physics</option>
+                    <option>Mathematics and Computing</option>
+                    <option>Mechanical Engineering</option>
+                    <option>Civil Engineering</option>
+                    <option>Geological Technology</option>
+                    <option>Geophysical Technology</option>
+                    <option>Chemical Engineering</option>
+                    <option>Metallurgy</option>
+                    <option>Bio Technology</option>
+                    <option>Physics</option>
+                    <option>Chemical Science</option>
+                </select>
+                <div class="button">
+                <input type="submit" class="submit" value="submit"/>
+                <input type="submit" class="reset" value="reset"/>
+                </div>
+
+            </div>
+        </div>
+        <div id="result"></div>
+
+    <script>
+        const profileForm = document.getElementById('profileForm');
+        const resultDiv = document.getElementById('result');
+
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullname = document.getElementById('fullname').value;
+            const phoneno = document.getElementById('phoneno').value;
+            const dob=document.getElementById('date').value;
+            const  year=document.getElementById('year').value;
+            const branch=document.getElementById('branch').value;
+
+
+            const response = await fetch('http://localhost:5000/profile', {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ fullname, phoneno , dob , year, branch }),
+            });
+
+            const data = await response.json();
+            resultDiv.innerText = data.message;
+        });
+    </script>
+    </body>
+</html>
